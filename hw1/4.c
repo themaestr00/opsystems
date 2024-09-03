@@ -16,12 +16,3 @@ int compare(const void  *ptr1, const void *ptr2) {
 void sort_even_odd(size_t count, int *data) {
     qsort(data, count, sizeof(int), compare);
 }
-
-int main(void) {
-    int mas[] = {};
-    sort_even_odd(0, mas);
-    for (int i = 0; i < 0; i++) {
-        printf("%d ", mas[i]);
-    }
-    return 0;
-}
