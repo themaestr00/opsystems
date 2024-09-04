@@ -1,20 +1,35 @@
 #include <stdio.h>
+#include <ctype.h>
+
+enum
+{
+    MASK1 = 0xfb,
+    MASK2 = 0x8,
+    NUMS_START = '0' - 1,
+    LOWER_START = 'a' - 11,
+    UPPER_START = 'A' - 37
+};
 
 int
 main(void)
 {
-    char symbols[] = "@0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#";
     char sym;
+    char symbols[] = "@0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#";
     int code;
     while ((sym = getchar()) != EOF) {
-        for (int i = 1; i < 63; i++) {
-            if (sym == symbols[i]) {
-                code = i & 0xFB;
-                code ^= 0x8;
-                putchar(symbols[code]);
-                break;
-            }
+        if (!isalnum(sym)) {
+            continue;
         }
+        if (isdigit(sym)) {
+            code = sym - NUMS_START;
+        } else if (islower(sym)) {
+            code = sym - LOWER_START;
+        } else {
+            code = sym - UPPER_START;
+        }
+        code &= MASK1;
+        code ^= MASK2;
+        putchar(symbols[code]);
     }
     return 0;
 }
