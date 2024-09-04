@@ -1,11 +1,13 @@
 #include <stdio.h>
 
-int main(void) {
+int
+main(void)
+{
     char symbols[] = "@0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ#";
     char sym;
     int code;
     while ((sym = getchar()) != EOF) {
-        for (int i = 0; i < 64; i++) {
+        for (int i = 1; i < 63; i++) {
             if (sym == symbols[i]) {
                 code = i & 0xFB;
                 code ^= 0x8;
