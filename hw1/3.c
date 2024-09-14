@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int pow_mod(int x, int y, int n) {
+int
+pow_mod(int x, int y, int n)
+{
     int res = 1;
     while (y) {
         if (y & 1) {
@@ -15,7 +17,9 @@ int pow_mod(int x, int y, int n) {
     return res;
 }
 
-int main(void) {
+int
+main(void)
+{
     int n;
     scanf("%d", &n);
     int *degs = malloc((n - 1) * sizeof(int));
@@ -31,3 +35,4 @@ int main(void) {
     free(degs);
     return 0;
 }
+ 

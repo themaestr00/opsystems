@@ -21,3 +21,4 @@ sort_even_odd(size_t count, int *data)
 {
     qsort(data, count, sizeof(int), compare);
 }
+ 
