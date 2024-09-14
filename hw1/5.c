@@ -2,7 +2,9 @@
 
 enum
 {
-    MAX_LEN = 9
+    MAX_LEN = 9,
+    MAX_VALUE = 10,
+    MIN_VALUE = 0
 };
 
 int
@@ -39,7 +41,10 @@ int
 main(void)
 {
     int n;
-    scanf("%d", &n);
+    if (scanf("%d", &n) != 1 || n <= MIN_VALUE || n >= MAX_VALUE) {
+        fprintf(stderr, "error: incorrect input!\n");
+        return 1;
+    }
     print_permutations(n, n);
     return 0;
 }
