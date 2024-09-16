@@ -17,7 +17,7 @@ main(int argc, char *argv[])
         return 1;
     }
     double course, coeff = 0;
-    char *eptr;
+    char *eptr = NULL;
     for (int i = 1; i < argc; ++i) {
         errno = 0;
         if (i == 1) {
