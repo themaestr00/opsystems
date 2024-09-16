@@ -7,7 +7,7 @@ main(int argc, char *argv[])
 {
     int sum_pos = 0, sum_neg = 0;
     long num;
-    char *eptr;
+    char *eptr = NULL;
     for (int i = 1; i < argc; ++i) {
         errno = 0;
         num = strtol(argv[i], &eptr, 10);
