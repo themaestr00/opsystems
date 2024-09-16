@@ -16,7 +16,7 @@ main(int argc, char *argv[])
         fprintf(stderr, "%s: Not enough arguments!\n", argv[0]);
         return 1;
     }
-    double course, coeff;
+    double course, coeff = 0;
     char *eptr;
     for (int i = 1; i < argc; ++i) {
         errno = 0;
@@ -26,7 +26,7 @@ main(int argc, char *argv[])
             coeff = strtod(argv[i], &eptr);
         }
         if (errno || *eptr || eptr == argv[i]) {
-            fprintf(stderr, "%s: Ivalid argument number %d\n", argv[0], i);
+            fprintf(stderr, "%s: Invalid argument number %d\n", argv[0], i);
             return 1;
         }
         coeff = 1 + coeff / PERCENT;
