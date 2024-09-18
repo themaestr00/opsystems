@@ -3,7 +3,7 @@ satsum(int v1, int v2)
 {
     enum
     {
-        MY_INT_MAX = ~0U << -~0U >> -~0U
+        MY_INT_MAX = (int)(>> -~0U
     };
     enum
     {
@@ -16,3 +16,4 @@ satsum(int v1, int v2)
     }
     return v1 + v2;
 }
+

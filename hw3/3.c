@@ -35,3 +35,4 @@ main(int argc, char *argv[])
     }
     printf("%.4lf\n", course);
 }
+
