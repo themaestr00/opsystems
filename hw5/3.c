@@ -8,13 +8,17 @@ parse_rwx_permissions(const char *str)
     }
     int result = 0;
     char template[] = "rwxrwxrwx";
-    for (int i = 0; i < strlen(template); ++i) {
+    int i;
+    for (i = 0; i < strlen(template); ++i) {
+        result <<= 1;
         if (str[i] == template[i]) {
             result ^= 1;
         } else if (str[i] != '-') {
             return -1;
         }
-        result <<= 1;
+    }
+    if (str[i]) {
+        return -1;
     }
     return result;
 }
