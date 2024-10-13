@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <errno.h>
+#include <limits.h>
 
 int
 is_suffix(char *str1, char *str2)
@@ -31,9 +32,11 @@ main(int argc, char *argv[])
     struct dirent *curr;
     struct stat fileinfo;
     long count = 0;
+    char path[PATH_MAX];
     errno = 0;
     while ((curr = readdir(directory))) {
-        if (!access(curr->d_name, F_OK | X_OK) && stat(curr->d_name, &fileinfo) != -1 && S_ISREG(fileinfo.st_mode) &&
+        snprintf(path, PATH_MAX, "%s/%s", argv[1], curr->d_name);
+        if (!access(path, F_OK | X_OK) && stat(path, &fileinfo) != -1 && S_ISREG(fileinfo.st_mode) &&
             is_suffix(".exe", curr->d_name)) {
             ++count;
         }

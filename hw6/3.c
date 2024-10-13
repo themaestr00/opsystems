@@ -1,46 +1,34 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
+#include <stddef.h>
 
-enum
+struct s1
 {
-    YEAR_MIN = 1910,
-    YEAR_MAX = 2037,
-    YEAR_MONTHS = 12,
-    YEAR_START = 1900,
-    WEEK_DAYS = 7,
-    THURSDAY = 4,
-    MOD = 3
+    char f1;
+    long long f2;
+    char f3;
 };
 
-int
-main(void)
+struct s2
 {
-    int year;
-    if (scanf("%d", &year) != 1 || year < YEAR_MIN || year > YEAR_MAX) {
-        fprintf(stderr, "Wrong input!\n");
-        exit(1);
+    char f1;
+    char f3;
+    long long f2;
+};
+
+size_t
+compactify(void *ptr, size_t size)
+{
+    if (size <= 0 || !ptr) {
+        return 0;
     }
-    struct tm timeinfo = {.tm_year = year - YEAR_START};
-    for (int i = 1; i <= YEAR_MONTHS; ++i) {
-        timeinfo.tm_mon = i - 1;
-        timeinfo.tm_mday = 1;
-        timeinfo.tm_isdst = -1;
-        errno = 0;
-        if (mktime(&timeinfo) == -1 && errno) {
-            fprintf(stderr, "Error in mktime: %s\n", strerror(errno));
-            exit(1);
-        }
-        timeinfo.tm_mday += (THURSDAY - timeinfo.tm_wday + WEEK_DAYS) % WEEK_DAYS + WEEK_DAYS;
-        if (timeinfo.tm_mday % MOD) {
-            printf("%d %d\n", i, timeinfo.tm_mday);
-        }
-        timeinfo.tm_mday += 2 * WEEK_DAYS;
-        if (timeinfo.tm_mday % MOD) {
-            printf("%d %d\n", i, timeinfo.tm_mday);
-        }
+    struct s1 *ptr_in = (struct s1 *) ptr;
+    struct s2 *ptr_out = (struct s2 *) ptr;
+    size_t len = size / sizeof(struct s1);
+    size_t size2 = 0;
+    for (size_t i = 0; i < len; ++i) {
+        ptr_out[i].f1 = ptr_in[i].f1;
+        ptr_out[i].f2 = ptr_in[i].f2;
+        ptr_out[i].f3 = ptr_in[i].f3;
+        size2 += sizeof(struct s2);
     }
-    return 0;
+    return size2;
 }
