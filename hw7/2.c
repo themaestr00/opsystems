@@ -24,8 +24,7 @@ main(int argc, char *argv[])
     for (int i = 1; i < argc; ++i) {
         num = strtol(argv[i], &endptr, DECIMAL);
         if (!errno && endptr != argv[i] && check_end(endptr) && (int) num == num) {
-            if (endptr[0] == 'k') {
-                num *= THOUSANDS;
+            if (endptr[0] == 'k' && !__builtin_mul_overflow(num, THOUSANDS, &num)) {
                 if (endptr[1] == '+') {
                     sum += num;
                 } else {
