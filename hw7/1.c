@@ -25,19 +25,35 @@ getnum(long long *buf)
         return 0;
     }
     while (c != EOF && !isspace(c)) {
-        if (__builtin_mul_overflow(*buf, WEIGHT, buf)) {
-            shift_to_space();
-            return -1;
-        }
-        if (c == '1') {
-            if (__builtin_add_overflow(*buf, 1, buf)) {
+        if (c == '0') {
+            if (__builtin_mul_overflow(*buf, WEIGHT, buf)) {
                 shift_to_space();
                 return -1;
             }
+        }
+        if (c == '1') {
+            if (*buf < 0) {
+                if (__builtin_mul_overflow(*buf + 1, WEIGHT, buf) || __builtin_sub_overflow(*buf, 2, buf)) {
+                    shift_to_space();
+                    return -1;
+                }
+            } else {
+                if (__builtin_mul_overflow(*buf, WEIGHT, buf) || __builtin_add_overflow(*buf, 1, buf)) {
+                    shift_to_space();
+                    return -1;
+                }
+            }
         } else if (c == 'a') {
-            if (__builtin_sub_overflow(*buf, 1, buf)) {
-                shift_to_space();
-                return -1;
+            if (*buf > 0) {
+                if (__builtin_mul_overflow(*buf - 1, WEIGHT, buf) || __builtin_add_overflow(*buf, 2, buf)) {
+                    shift_to_space();
+                    return -1;
+                }
+            } else {
+                if (__builtin_mul_overflow(*buf, WEIGHT, buf) || __builtin_sub_overflow(*buf, 1, buf)) {
+                    shift_to_space();
+                    return -1;
+                }
             }
         }
         c = getchar();
@@ -58,3 +74,4 @@ main(void)
         }
     }
 }
+
