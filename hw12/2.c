@@ -5,7 +5,7 @@ int
 cmd(char *command)
 {
     pid_t pid;
-    int status;
+    int status = 0;
     if ((pid = fork()) == -1) {
         return 0;
     } else if (!pid) {

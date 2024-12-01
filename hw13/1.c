@@ -23,7 +23,7 @@ main(void)
         close(fd[1]);
         wait(NULL);
         read(fd[0], &curr, sizeof(curr));
-        gmtime_r(&curr, &date);
+        localtime_r(&curr, &date);
         switch (i) {
         case 0:
             printf("Y:%04d\n", date.tm_year + YEAR_START);
